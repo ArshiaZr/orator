@@ -41,6 +41,10 @@ const config = {
           DEFAULT: '#268de0',
           light: '#5daef0',
         },
+        shadowcolor: {
+          DEFAULT: "#EDEDED",
+          light: "#F5F5F5",
+        },
       },
       dropShadow: {
         glow: ['0 0px 20px rgba(255 ,255, 255, 1)', '0 0px 65px rgba(255, 255, 255, 0.7)'],
