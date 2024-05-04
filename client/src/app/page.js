@@ -1,5 +1,4 @@
 'use client';
-import Link from 'next/link';
 import { BackgroundBeams } from '@/components/ui/background-beam';
 import { Homepage } from '@/components/Homepage';
 
