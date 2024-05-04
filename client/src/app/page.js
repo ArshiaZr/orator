@@ -1,14 +1,21 @@
-import Upload from "@/components/upload";
-import SignupForm from "@/components/signup";
-import { DrawerModal } from "@/components/feedbackModal";
-import { Divide } from "lucide-react";
+'use client';
+import Link from 'next/link';
+import { BackgroundBeams } from '@/components/ui/background-beam';
+import { Homepage } from '@/components/Homepage';
+const navigation = [
+  { name: 'Projects', href: '/projects' },
+  { name: 'Contact', href: '/contact' },
+  { name: 'Blog', href: '/blog' },
+  { name: 'skills', href: '/skills' },
+
+
+];
+
 export default function Home() {
-  const feedback = "dslkf;sldkf";
   return (
-    <div className="w-screen h-screen">
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-        <SignupForm/>
+      <div className="flex flex-col items-center h-screen w-full rounded-md bg-neutral-950 relative antialiased">
+        <Homepage />
+        <BackgroundBeams className='w-screen h-screen' />
       </div>
-    </div>
   );
 }
