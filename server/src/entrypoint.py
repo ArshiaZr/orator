@@ -13,7 +13,8 @@ image = modal.Image.debian_slim().run_commands("apt install -y ffmpeg").copy_loc
     "google-cloud-speech",
     "langchain",
     "langchain-google-vertexai",
-    "PyJWT"
+    "PyJWT",
+    "youtube_search",
 )
 
 
@@ -35,9 +36,12 @@ def flask_app():
     from google.cloud.speech_v2 import SpeechClient
     from google.cloud.speech_v2.types import cloud_speech
     from langchain_core.prompts import PromptTemplate
-    from langchain_core.runnables import RunnablePassthrough
     from langchain_google_vertexai import VertexAI
     from pymongo import MongoClient
+    from langchain_community.tools import YouTubeSearchTool
+    from bson import ObjectId
+    import ast
+
 
 
     llm = VertexAI(
@@ -299,31 +303,117 @@ Please provide specific feedback based on these areas.
         try:
             response = json.loads(response)
         except:
-            return jsonify({"error": "Failed to generate course"}), 500
-
+            return jsonify({"error": "Failed to convert to json", "response": response}), 500
+        
         response = format_responses(response)
         
         tries = 0
-        while response is None and tries < 3:
+        while response is None and tries < 5:
             tries += 1
             response = chain.invoke(context)
             response = format_responses(response)
+
         
         if response is None:
             return jsonify({"error": "Failed to generate course"}), 500
+        
 
         # create a course object
         course = {
             "user_id": decoded_token["user_id"],
-            "course": response
+            "chapters": response
         }
+        result = None
         try:
             result = db.courses.insert_one(course)
         except:
-            return jsonify({"error": "Failed to generate course"}), 500
+            return jsonify({"error": "Failed to generate the course. Try again in a bit."}), 500
+        
+        return jsonify({"message": "Course generated", "course_id": str(result.inserted_id)}), 200
 
-        return jsonify({"message": "Course generated", "course_id": result.inserted_id}), 200
+    @web_app.post("/generate-chapter")
+    @jwt_required
+    def generate_chapter_api(decoded_token):
+        data = json.loads(request.data)
+        course_id = data["course_id"]
+        chapter_id = data["chapter_id"]
 
+        if course_id is None or chapter_id is None:
+            return jsonify({"error": "Missing required fields"}), 400
+        
+        if len(course_id) != 24:
+            return jsonify({"error": "Invalid course id"}), 400
+
+
+        course = db.courses.find_one({"_id": ObjectId(course_id),"user_id": decoded_token["user_id"]})
+
+        if course is None:
+            return jsonify({"error": "Course not found"}), 404
+        
+        if "chapters" not in course:
+            return jsonify({"error": "No chapters found"}), 404
+        
+        if chapter_id < 0 or chapter_id >= len(course["chapters"]):
+            return jsonify({"error": "Invalid chapter id"}), 400
+        
+        if int(chapter_id) != chapter_id:
+            return jsonify({"error": "Invalid chapter id"}), 400
+                
+        chapters = course["chapters"]
+        youtube_search_query = chapters[chapter_id]["youtube_search_query"]
+
+        yt = YouTubeSearchTool()
+
+        result = yt.run(youtube_search_query)
+
+        if result is None:
+            return jsonify({"error": "Failed to generate chapter"}), 500
+        
+        try:
+            result = ast.literal_eval(result)
+            db.courses.update_one({"_id": ObjectId(course_id), "user_id": decoded_token["user_id"]}, {"$set": {f"chapters.{chapter_id}.youtube_results": result[0]}})
+        except:
+            return jsonify({"error": "Failed to generate chapter"}), 500
+
+        return jsonify({"message": "Chapter generated", "youtube_results": result[0]}), 200
+
+    @web_app.get("/courses-by-user")
+    @jwt_required
+    def get_courses(decoded_token):
+        courses = db.courses.find({"user_id": decoded_token["user_id"]})
+
+        if courses is None:
+            return jsonify({"error": "No courses found"}), 404
+        
+        res = []
+        for course in courses:
+            res.append({
+                "course_id": str(course["_id"]),
+                "chapters": course["chapters"]
+            })
+        
+        return jsonify({"message": "Courses found", "courses": res}), 200
+    
+    @web_app.get("/course-by-id")
+    @jwt_required
+    def get_course_by_id(decoded_token):
+        course_id = request.args.get('course_id')
+        if course_id is None:
+            return jsonify({"error": "No course id provided"}), 400
+        if len(course_id) != 24:
+            return jsonify({"error": "Invalid course id"}), 400
+        course = db.courses.find_one({"_id": ObjectId(course_id), "user_id": decoded_token["user_id"]})
+
+        if course is None:
+            return jsonify({"error": "Course not found"}), 404
+        
+        res = {
+            "course_id": str(course["_id"]),
+            "chapters": course["chapters"]
+        }
+        
+        return jsonify({"message": "Course found", "course": res}), 200
+        
     @web_app.get("/protected")
     @jwt_required
     def protected(decoded_token):
