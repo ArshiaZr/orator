@@ -1,14 +1,11 @@
 import { useState, useEffect } from "react";
+import { useData } from "@/contexts/DataContext";
 
-const useFetch = (
-  url,
-  method = "GET",
-  bodyData = null,
-  canFetch = true
-) => {
+const useFetch = (url, method = "GET", bodyData = null, canFetch = true) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const { token } = useData();
 
   useEffect(() => {
     const fetchData = async () => {
