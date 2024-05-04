@@ -1,7 +1,9 @@
-import Upload from "@/components/upload";
 import SignupForm from "@/components/signup";
-export default function Home() {
+
+export default function UploadPage() {
   return (
-    <SignupForm/>
+    <div>
+      <SignupForm/>
+    </div>
   );
 }
