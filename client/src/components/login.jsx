@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { cn } from "../../utils/cn";
+import Link from "next/link";
 
 
 // Component to wrap label and input elements
@@ -57,6 +58,7 @@ export default function LoginForm() {
               Sign up &rarr;
               <BottomGradient />
             </button>
+            <Link href="/signup"> Dont Have An Account? </Link>
             <div className="bg-gradient-to-r from-transparent via-neutral-300 to-transparent my-8 h-[1px] w-full" />
           </form>
         </div>
