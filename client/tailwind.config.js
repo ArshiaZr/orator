@@ -72,6 +72,7 @@ const config = {
         title: 'title 3s ease-out forwards',
         'fade-left': 'fade-left 3s ease-in-out forwards',
         'fade-right': 'fade-right 3s ease-in-out forwards',
+        aurora: 'aurora 60s linear infinite',
       },
       keyframes: {
         'fade-in': {
@@ -127,6 +128,14 @@ const config = {
           '100%': {
             'line-height': '100%',
             opacity: '100%',
+          },
+        },
+        aurora: {
+          from: {
+            backgroundPosition: '50% 50%, 50% 50%',
+          },
+          to: {
+            backgroundPosition: '350% 50%, 350% 50%',
           },
         },
       },

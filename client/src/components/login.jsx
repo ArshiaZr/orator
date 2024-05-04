@@ -25,7 +25,7 @@ const BottomGradient = () => {
   );
 };
 
-export default function SignupForm() {
+export default function LoginForm() {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const router = useRouter();
@@ -41,7 +41,7 @@ export default function SignupForm() {
           <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
             Welcome to Orator
           </h2>
-          Sign Up Below
+          Login Up Below
           <form className="my-8" onSubmit={handleSubmit}>
             <LabelInputContainer className="mb-4">
               <Label htmlFor="email">Email Address</Label>
