@@ -2,11 +2,13 @@
 import React, { useState } from "react";
 import { HoveredLink, Menu, MenuItem, ProductItem } from "./navbarmenu";
 import { cn } from "@/lib/utils";
+import { IoVideocam } from "react-icons/io5";
+
 
 export function ExportNavbar() {
   return (
     <div className="relative w-full flex items-center justify-center">
-      <Navbar className="top-2" />
+      <Navbar className="top-0" />
     </div>
   );
 }
@@ -15,17 +17,25 @@ function Navbar({ className }: { className?: string }) {
   const [active, setActive] = useState<string | null>(null);
   return (
     <div
-      className={cn("fixed top-6 inset-x-0 max-w-xl mx-auto z-50", className)}
+      className={cn("fixed top-6 inset-x-0 w-screen mx-auto z-50", className)}
     >
       <Menu setActive={setActive}>
-        <MenuItem setActive={setActive} active={active} item="Services">
-          <div className="flex flex-col space-y-4 text-sm">
-            <HoveredLink href="/web-dev">Web Development</HoveredLink>
-            <HoveredLink href="/interface-design">Interface Design</HoveredLink>
-            <HoveredLink href="/seo">Search Engine Optimization</HoveredLink>
-            <HoveredLink href="/branding">Branding</HoveredLink>
+        <div className="flex justify-front content-center space-x-2 border border-black">
+          <div className="flex justify-start relative top-1 ">
+              <IoVideocam />
           </div>
-        </MenuItem>
+          <div className="flex justify-end content-center">
+            <MenuItem setActive={setActive} active={active} item="Upload">
+              <div className="flex flex-col space-y-4 text-sm">
+                <HoveredLink href="/pastuploads">Past Uploads</HoveredLink>
+                <HoveredLink href="/interface-design">Interface Design</HoveredLink>
+                <HoveredLink href="/seo">Search Engine Optimization</HoveredLink>
+                <HoveredLink href="/branding">Branding</HoveredLink>
+              </div>
+            </MenuItem>
+          </div>
+        </div>
+        
         <MenuItem setActive={setActive} active={active} item="Products">
           <div className="  text-sm grid grid-cols-2 gap-10 p-4">
             <ProductItem
@@ -64,5 +74,6 @@ function Navbar({ className }: { className?: string }) {
         </MenuItem>
       </Menu>
     </div>
+    
   );
 }
