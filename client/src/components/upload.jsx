@@ -18,33 +18,33 @@ const Upload = () => {
     }
 
     return (
-<div className="flex flex-wrap">
-    <div className="w-full md:w-1/2 p-4">
-        <label htmlFor="dropzone-file" className="block font-medium leading-6 text-purple-900 text-right">
-            <div className="mt-2 flex justify-center rounded-lg border border-dashed border-purple-900/25 px-6 py-10">
-                <div className="text-center">
-                    <FaFileUpload className="mx-auto h-12 w-12 text-purple-600 mb-2" />
-                    <p className="mb-2 text-sm text-black">
-                        <span className="relative cursor-pointer rounded-md font-semibold text-purple-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-purple-600 focus-within:ring-offset-2 hover:text-purple-500">
-                            Click to upload
-                        </span>{" "}
-                        or drag and drop
-                    </p>
-                    <p className="text-xs text-purple-600">
-                        MP4 up to xxMB
-                    </p>
-                </div>
-                <input
-                    id="dropzone-file"
-                    type="file"
-                    className="hidden"
-                    accept="video/mp4"
-                    onChange={(e) => handleVideoUpload(e)}
-                />
+        <div className="flex flex-wrap justify-center content-center">
+            <div className="w-full h-full md:w-1/2 p-4">
+                <label htmlFor="dropzone-file" className="block font-medium leading-6 text-purple-900 text-right">
+                    <div className="mt-2 flex justify-center rounded-lg border border-dashed border-purple-900/25 px-6 py-10">
+                        <div className="text-center">
+                            <FaFileUpload className="mx-auto h-12 w-12 text-purple-600 mb-2" />
+                            <p className="mb-2 text-sm text-black">
+                                <span className="relative cursor-pointer rounded-md font-semibold text-purple-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-purple-600 focus-within:ring-offset-2 hover:text-purple-500">
+                                    Click to upload
+                                </span>{" "}
+                                or drag and drop
+                            </p>
+                            <p className="text-xs text-purple-600">
+                                MP4 up to 16MB
+                            </p>
+                        </div>
+                        <input
+                            id="dropzone-file"
+                            type="file"
+                            className="hidden"
+                            accept="video/mp4"
+                            onChange={(e) => handleVideoUpload(e)}
+                        />
+                    </div>
+                </label>
             </div>
-        </label>
-    </div>
-</div>
+        </div>
     );
 };
 
