@@ -41,6 +41,7 @@ def flask_app():
     from langchain_community.tools import YouTubeSearchTool
     from bson import ObjectId
     import ast
+    import time
 
 
 
@@ -280,39 +281,34 @@ Please provide specific feedback based on these areas.
 
         response = chain.invoke(context)
 
-        if response.startswith("**") or response.startswith("##"):
-            response = response[2:]
-        response = response.strip()
-        if(response.startswith("*") or response.startswith("-") or response.startswith("_")):
-            response = response[1:]
-        response = response.strip()
-
-        if response.startswith("```"):
-            response = response[3:]
-        if response.endswith("```"):
-            response = response[:-3]
-        response = response.strip()
-
-        if(response.startswith("*") or response.startswith("-") or response.startswith("_")):
-            response = response[1:]
-        response = response.strip()
-
-        if response.startswith("json"):
-            response = response[4:]
+        tries = 0
+        is_json = False
 
         try:
+            response = cleaning_response(response)
             response = json.loads(response)
+            is_json = True
         except:
+            is_json = False
+            while tries < 5:
+                response = chain.invoke(context)
+                response = cleaning_response(response)
+
+
+                # check if the response is json
+                try:
+                    response = json.loads(response)
+                    is_json = True
+                    break
+                except:
+                    tries += 1
+                    # sleep for 5 seconds
+                    time.sleep(5)
+
+        if not is_json:
             return jsonify({"error": "Failed to convert to json", "response": response}), 500
         
         response = format_responses(response)
-        
-        tries = 0
-        while response is None and tries < 5:
-            tries += 1
-            response = chain.invoke(context)
-            response = format_responses(response)
-
         
         if response is None:
             return jsonify({"error": "Failed to generate course"}), 500
@@ -421,6 +417,30 @@ Please provide specific feedback based on these areas.
     
     return web_app
 
+
+def cleaning_response(response):
+    if response.startswith("**") or response.startswith("##"):
+        response = response[2:]
+    response = response.strip()
+    if(response.startswith("*") or response.startswith("-") or response.startswith("_")):
+        response = response[1:]
+    response = response.strip()
+
+    if response.startswith("```"):
+        response = response[3:]
+    if response.endswith("```"):
+        response = response[:-3]
+    response = response.strip()
+
+    if(response.startswith("*") or response.startswith("-") or response.startswith("_")):
+        response = response[1:]
+    response = response.strip()
+
+    if response.startswith("json"):
+        response = response[4:]
+
+    response = response.strip()
+    return response
 
 def format_responses(response):
     import json
