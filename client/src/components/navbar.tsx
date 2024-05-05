@@ -49,7 +49,7 @@ function Navbar({ className }: { className?: string }) {
                 <ProductItem
                   title="Data Visualization"
                   href="/visualize"
-                  src=""
+                  src="./chart.svg"
                   description="View your progress and results from previous uploads"
                 />
                 <ProductItem
@@ -59,10 +59,10 @@ function Navbar({ className }: { className?: string }) {
                   description="Take a look at the suggestions you've received in the past"
                 />
                 <ProductItem
-                  title="placeholder feature"
-                  href=""
-                  src=""
-                  description="lorem ipsum"
+                  title="Past Lessons"
+                  href="/previouslessons"
+                  src="./bookmark.svg"
+                  description="Take a look at past lessons you've created, modify them, or delete them"
                 />
                 <ProductItem
                   title="placeholder feature"

@@ -79,16 +79,23 @@ export default function UploadPages() {
           <Link
             href="/upload/pastuploads"
             style={{
-              width: "fit-content",
-              padding: "0.5rem 1rem",
-              textAlign: "center",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
             }}
-            className="bg-gradient-to-br from-black to-neutral-600 text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
-          >
-            Past Uploads &rarr;
-          </Link>
+            >
+            <Link
+                href="/upload/pastuploads"
+                style={{
+                width: "fit-content",
+                padding: "0.5rem 1rem",
+                textAlign: "center",
+                }}
+                className="bg-gradient-to-br from-black to-neutral-600 text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
+            >
+                Past Uploads &rarr;
+            </Link>
+            </div>
         </div>
-      </div>
-    </div>
   );
 }
