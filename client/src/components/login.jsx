@@ -35,7 +35,7 @@ export default function LoginForm() {
     { email, password },
     canSend
   );
-  const { addAlert, saveToken, token } = useData();
+  const { addAlert, saveToken, token, setLoadingModal } = useData();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -62,6 +62,10 @@ export default function LoginForm() {
       window.location.replace("/dashboard");
     }
   }, [token]);
+
+  useEffect(() => {
+    setLoadingModal(loading);
+  }, [loading]);
 
   return (
     <div className="flex items-center justify-center">

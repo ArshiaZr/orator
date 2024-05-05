@@ -7,25 +7,66 @@ export default function UploadPages() {
   return (
     <div
       style={{
-        minHeight: "100vh",
+        height: "100vh",
         width: "100%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        position: "relative",
       }}
     >
+      <div
+        style={{
+          position: "absolute",
+          top: "0",
+          left: "0",
+          width: "100%",
+          height: "100vh",
+          overflow: "hidden",
+        }}
+      >
+        <img
+          src="/images/01.jpeg"
+          style={{ objectFit: "cover", opacity: 0.5 }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            top: "3.1rem",
+            left: "0",
+            width: "100%",
+            height: "100%",
+            background: "linear-gradient(180deg, #0000001b 0%, #0000009a 100%)",
+          }}
+        ></div>
+      </div>
       <div>
         <ExportNavbar />
       </div>
-      <div className="justify-center">
+      <div
+        className="justify-center relative bg-white"
+        style={{
+          padding: "2rem",
+          borderRadius: "1rem",
+          background: "rgba(255, 255, 255, 0.5)",
+        }}
+      >
         <div
-          className="flex justify-center align-center"
+          className="flex justify-center align-center flex-col gap-3"
           style={{ alignItems: "center" }}
         >
-          <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
+          <h2
+            className="font-bold text-neutral-800 dark:text-neutral-200"
+            style={{
+              fontSize: "1.75rem",
+            }}
+          >
             Upload a MP4 file to Orator
           </h2>
-          <p></p>
+          <p>
+            Load a video of you presentiation and obtain
+            <br /> feedback based on expertly-researched criteria
+          </p>
         </div>
         <Upload />
         <div

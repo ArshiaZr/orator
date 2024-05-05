@@ -30,7 +30,7 @@ export default function SignupForm() {
   const [password, setPassword] = useState(null);
 
   const [canSend, setCanSend] = useState(false);
-  const { addAlert, token } = useData();
+  const { addAlert, token, setLoadingModal } = useData();
   const { data, loading, error } = useFetch(
     process.env.NEXT_PUBLIC_BACKEND_URL + "signup",
     "POST",
@@ -62,6 +62,10 @@ export default function SignupForm() {
       window.location.replace("/dashboard");
     }
   }, [token]);
+
+  useEffect(() => {
+    setLoadingModal(loading);
+  }, [loading]);
 
   return (
     <div className="flex items-center justify-center">
