@@ -65,7 +65,7 @@ function Navbar({ className }: { className?: string }) {
                   title="Past Lessons"
                   href=""
                   src="/images/navbar/03.jpg"
-                  description="Take a look at the lessons you've taken in the past"
+                  description="Take a look at past lessons you've created, modify them, or delete them"
                 />
                 {/* <ProductItem
                   title="placeholder feature"
