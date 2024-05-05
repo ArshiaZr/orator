@@ -16,7 +16,7 @@ const useFetch = (url, method = "GET", bodyData = null, canFetch = true) => {
         let options = {
           method,
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `${token}`,
           },
           body: bodyData ? JSON.stringify(bodyData) : null,
         };

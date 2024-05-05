@@ -6,6 +6,7 @@ const DataContext = createContext();
 export const DataProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [alerts, setAlerts] = useState([]);
+  const [loadingModal, setLoadingModal] = useState(false);
 
   const addAlert = ({ message, type, time = 3000 }) => {
     let tmp = [...alerts];
@@ -50,6 +51,9 @@ export const DataProvider = ({ children }) => {
         alerts,
         setAlerts,
         saveToken,
+        token,
+        setLoadingModal,
+        loadingModal,
       }}
     >
       {children}
