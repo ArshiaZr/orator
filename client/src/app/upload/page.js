@@ -17,7 +17,7 @@ export default function UploadPages() {
                     <p></p>
                 </div>
                 <Upload/>
-                <div className="absolute inset-1/2 transform -translate-x-1/2 translate-y-14 w-1/4 h-1/5 md:rounded-md xl:rounded-lg p-4">
+                <div className="absolute mt-28 inset-1/2 transform -translate-x-1/2 translate-y-14 w-1/4 h-1/5 md:rounded-md xl:rounded-lg p-4">
                     <Link href="/upload/pastuploads" className="bg-gradient-to-br from-black to-neutral-600 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset] flex items-center justify-center">
                         Past Uploads &rarr;
                     </Link>
