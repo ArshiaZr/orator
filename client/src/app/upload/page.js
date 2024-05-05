@@ -76,8 +76,7 @@ export default function UploadPages() {
             justifyContent: "center",
           }}
         >
-          <Link
-            href="/upload/pastuploads"
+          <div
             style={{
                 display: "flex",
                 alignItems: "center",
