@@ -9,7 +9,10 @@ import { CiLogout } from "react-icons/ci";
 
 export function ExportNavbar() {
   return (
-    <div className="relative w-full flex items-center justify-center">
+    <div
+      className="fixed w-full flex items-center justify-center"
+      style={{ zIndex: 10 }}
+    >
       <Navbar className="top-0" />
     </div>
   );
@@ -49,27 +52,27 @@ function Navbar({ className }: { className?: string }) {
                 <ProductItem
                   title="Data Visualization"
                   href="/visualize"
-                  src=""
+                  src="/images/navbar/01.jpg"
                   description="View your progress and results from previous uploads"
                 />
                 <ProductItem
                   title="Past Suggestions"
                   href="/suggestions"
-                  src="./vertex.svg"
+                  src="/images/navbar/02.jpg"
                   description="Take a look at the suggestions you've received in the past"
                 />
                 <ProductItem
+                  title="Past Lessons"
+                  href=""
+                  src="/images/navbar/03.jpg"
+                  description="Take a look at the lessons you've taken in the past"
+                />
+                {/* <ProductItem
                   title="placeholder feature"
                   href=""
                   src=""
                   description="lorem ipsum"
-                />
-                <ProductItem
-                  title="placeholder feature"
-                  href=""
-                  src=""
-                  description="lorem ipsum"
-                />
+                /> */}
               </div>
             </MenuItem>
           </div>
