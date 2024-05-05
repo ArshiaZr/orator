@@ -89,14 +89,14 @@ export const ProductItem = ({
     src: string;
 }) => {
     return (
-        <Link href={href} className="flex space-x-2">
+        <Link href={href} className="flex space-x-5">
             <Image
                 src={src}
-                width={60} // Modify the width here
-                height={30} // Modify the height here
+                width={90} // Modify the width here
+                height={70} // Modify the height here
                 alt={title}
                 className="flex-shrink-0 rounded-md shadow-2xl bg-shadowcolor"
-                style={{ backgroundImage: 'linear-gradient(to top, shadowcolor, white)' }} // Replace #color1 and #color2 with your desired gradient colors
+                style={{ backgroundImage: 'linear-gradient(to top, shadowcolor, white)' }}
             />
             <div>
                 <h4 className="text-xl font-bold mb-1 text-black dark:text-white">

@@ -46,7 +46,7 @@ function Navbar({ className }: { className?: string }) {
                 <ProductItem
                   title="Data Visualization"
                   href="/visualize"
-                  src=""
+                  src="./chart.svg"
                   description="View your progress and results from previous uploads"
                 />
                 <ProductItem
@@ -56,10 +56,10 @@ function Navbar({ className }: { className?: string }) {
                   description="Take a look at the suggestions you've received in the past"
                 />
                 <ProductItem
-                  title="placeholder feature"
-                  href=""
-                  src=""
-                  description="lorem ipsum"
+                  title="Past Lessons"
+                  href="/previouslessons"
+                  src="./bookmark.svg"
+                  description="Take a look at past lessons you've created, modify them, or delete them"
                 />
                 <ProductItem
                   title="placeholder feature"
@@ -73,12 +73,12 @@ function Navbar({ className }: { className?: string }) {
         </Link>
 
         {/* Sign In/Log In */}
-        <Link href="/login" className="flex justify-front content-center space-x-2">
+        <Link href="/profile" className="flex justify-front content-center space-x-2">
           <div className="flex justify-start relative top-1.5">
               <IoPerson />
           </div>
           <div className="flex justify-end content-center border border-transparent">
-            <p>Login</p>
+            <p>Profile</p>
           </div>
         </Link>
       </Menu>
