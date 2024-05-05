@@ -2,11 +2,15 @@
 import React, { useState } from "react";
 import { HoveredLink, Menu, MenuItem, ProductItem } from "./navbarmenu";
 import { cn } from "@/lib/utils";
+import { IoVideocam, IoPerson } from "react-icons/io5";
+import { MdHistory } from "react-icons/md";
+import Link from "next/link";
+import { CiLogout } from "react-icons/ci";
 
 export function ExportNavbar() {
   return (
     <div className="relative w-full flex items-center justify-center">
-      <Navbar className="top-2" />
+      <Navbar className="top-0" />
     </div>
   );
 }
@@ -15,53 +19,88 @@ function Navbar({ className }: { className?: string }) {
   const [active, setActive] = useState<string | null>(null);
   return (
     <div
-      className={cn("fixed top-6 inset-x-0 max-w-xl mx-auto z-50", className)}
+      className={cn("fixed top-6 inset-x-0 w-screen mx-auto z-50", className)}
     >
       <Menu setActive={setActive}>
-        <MenuItem setActive={setActive} active={active} item="Services">
-          <div className="flex flex-col space-y-4 text-sm">
-            <HoveredLink href="/web-dev">Web Development</HoveredLink>
-            <HoveredLink href="/interface-design">Interface Design</HoveredLink>
-            <HoveredLink href="/seo">Search Engine Optimization</HoveredLink>
-            <HoveredLink href="/branding">Branding</HoveredLink>
+        {/* Upload */}
+        <Link
+          href="/upload"
+          className="flex justify-front content-center space-x-2"
+        >
+          <div className="flex justify-start relative top-1.5 ">
+            <IoVideocam />
           </div>
-        </MenuItem>
-        <MenuItem setActive={setActive} active={active} item="Products">
-          <div className="  text-sm grid grid-cols-2 gap-10 p-4">
-            <ProductItem
-              title="Algochurn"
-              href=""
-              src=""
-              description="Prepare for tech interviews like never before."
-            />
-            <ProductItem
-              title="Tailwind Master Kit"
-              href=""
-              src=""
-              description="Production ready Tailwind css components for your next project"
-            />
-            <ProductItem
-              title="Moonbeam"
-              href=""
-              src=""
-              description="Never write from scratch again. Go from idea to blog in minutes."
-            />
-            <ProductItem
-              title="Rogue"
-              href=""
-              src=""
-              description="Respond to government RFPs, RFIs and RFQs 10x faster using AI"
-            />
+          <div className="flex justify-end content-center border border-transparent">
+            <p>Upload</p>
           </div>
-        </MenuItem>
-        <MenuItem setActive={setActive} active={active} item="Pricing">
-          <div className="flex flex-col space-y-4 text-sm">
-            <HoveredLink href="/hobby">Hobby</HoveredLink>
-            <HoveredLink href="/individual">Individual</HoveredLink>
-            <HoveredLink href="/team">Team</HoveredLink>
-            <HoveredLink href="/enterprise">Enterprise</HoveredLink>
+        </Link>
+
+        {/* Past Results */}
+        <Link
+          href="/pastresults"
+          className="flex justify-front content-center space-x-2"
+        >
+          <div className="flex justify-start relative top-1.5 ">
+            <MdHistory />
           </div>
-        </MenuItem>
+          <div className="flex justify-end content-center border border-transparent">
+            <MenuItem setActive={setActive} active={active} item="Past Results">
+              <div className="text-sm grid grid-cols-2 gap-10 p-4">
+                <ProductItem
+                  title="Data Visualization"
+                  href="/visualize"
+                  src="./chart.svg"
+                  description="View your progress and results from previous uploads"
+                />
+                <ProductItem
+                  title="Past Suggestions"
+                  href="/suggestions"
+                  src="./vertex.svg"
+                  description="Take a look at the suggestions you've received in the past"
+                />
+                <ProductItem
+                  title="Past Lessons"
+                  href="/previouslessons"
+                  src="./bookmark.svg"
+                  description="Take a look at past lessons you've created, modify them, or delete them"
+                />
+                <ProductItem
+                  title="placeholder feature"
+                  href=""
+                  src=""
+                  description="lorem ipsum"
+                />
+              </div>
+            </MenuItem>
+          </div>
+        </Link>
+
+        {/* Sign In/Log In */}
+        <button
+          onClick={() => {}}
+          className="flex justify-front content-center space-x-2"
+        >
+          <div className="flex justify-start relative top-1.5">
+            <IoPerson />
+          </div>
+          <div className="flex justify-end content-center border border-transparent">
+            <p>Profile</p>
+          </div>
+        </button>
+        <button
+          onClick={() => {
+            localStorage.removeItem("token");
+            window.location.replace("/");
+          }}
+          className="flex justify-front content-center space-x-2"
+        >
+          <div className="flex justify-start relative top-1.5">
+            <CiLogout />
+          </div>
+          <div className="flex justify-end content-center border border-transparent">
+            <p>Logout</p>
+          </div>
+        </button>
       </Menu>
     </div>
   );

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useEffect } from "react";
 import Link from "next/link";
@@ -9,12 +9,13 @@ import {
   motion,
   animate,
 } from "framer-motion";
+import { useData } from "@/contexts/DataContext";
 
 const COLORS_TOP = ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"];
 
 export const Homepage = () => {
   const color = useMotionValue(COLORS_TOP[0]);
-
+  const { token } = useData();
 
   useEffect(() => {
     animate(color, COLORS_TOP, {
@@ -44,8 +45,8 @@ export const Homepage = () => {
           Public Speaking with Orator
         </h1>
         <p className="my-6 max-w-xl text-center text-base leading-relaxed md:text-lg md:leading-relaxed">
-            Orator is a public speaking platform that helps you improve your
-            speaking skills with AI generated feedback
+          Orator is a public speaking platform that helps you improve your
+          speaking skills with AI generated feedback
         </p>
         <motion.button
           style={{
@@ -60,7 +61,9 @@ export const Homepage = () => {
           }}
           className="group relative flex w-fit items-center gap-1.5 rounded-full bg-gray-950/10 px-4 py-2 text-gray-50 transition-colors hover:bg-gray-950/50"
         >
-          <Link className=" z-40" href={`/`}>Get Started</Link>
+          <Link className="z-40" href={token ? "/upload" : "/signup"}>
+            {token ? "Dashboard" : "Get Started"}
+          </Link>
           <FiArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12" />
         </motion.button>
       </div>
