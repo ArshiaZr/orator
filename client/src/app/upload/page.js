@@ -96,5 +96,7 @@ export default function UploadPages() {
             </Link>
             </div>
         </div>
+              </div>
+              </div>
   );
 }
