@@ -75,7 +75,13 @@ const LoaderCore = ({ loadingStates, value = 0 }) => {
   );
 };
 
-export const MultiStepLoader = ({ loadingStates, loading, loop = true, currentState, setCurrentState }) => {
+export const MultiStepLoader = ({
+  loadingStates,
+  loading,
+  loop = true,
+  currentState,
+  setCurrentState,
+}) => {
   useEffect(() => {
     if (!loading) {
       setCurrentState(0);

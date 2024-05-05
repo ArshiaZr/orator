@@ -1,8 +1,9 @@
 import { FaFileUpload } from "react-icons/fa";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useData } from "@/contexts/DataContext";
 import Feedbacks from "./Feedbacks";
+import MultiStepLoader from "./MultiStepLoader";
 
 const Upload = () => {
   const [files, setFiles] = useState([]);
@@ -11,6 +12,10 @@ const Upload = () => {
   const { token, setLoadingModal, addAlert } = useData();
   const [feedbacks, setFeedbacks] = useState([]);
   const [feebacksShown, setFeebacksShown] = useState(false);
+
+  const [loading, setLoading] = useState(false);
+  const [chatperNames, setChapterNames] = useState([]);
+  const [loadedCount, setLoadedCount] = useState(0);
 
   async function handleVideoUpload(event) {
     const files = event.target.files;
@@ -105,7 +110,8 @@ const Upload = () => {
   }
 
   const handleGenerateCourse = async () => {
-    let res_course = axios.post(
+    setLoadingModal(true);
+    let res_course = await axios.post(
       process.env.NEXT_PUBLIC_BACKEND_URL + "generate-course",
       {
         feedbacks: feedbacks,
@@ -123,16 +129,131 @@ const Upload = () => {
         type: "error",
         message: "Error generating course. Try later",
       });
+      setLoadingModal(false);
       return;
+    }
+    setLoadingModal(false);
+
+    getAllChaptersInfo(res_course.data.course_id);
+  };
+
+  const getCourseById = async (id) => {
+    setLoading(true);
+    let res_course = await axios.get(
+      process.env.NEXT_PUBLIC_BACKEND_URL + "course-by-id?course_id=" + id,
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+
+    if (res_course.data.message) {
+      addAlert({ message: res_course.data.message, type: "success" });
+    } else {
+      addAlert({
+        type: "error",
+        message: "Error getting course. Try later",
+      });
+      return null;
+    }
+    return res_course.data.course;
+  };
+
+  const getChapterInfo = async (chapterId, courseId) => {
+    let res_chapter = await axios.post(
+      process.env.NEXT_PUBLIC_BACKEND_URL + "generate-chapter",
+      {
+        course_id: courseId,
+        chapter_id: chapterId,
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    if (res_chapter.data.message) {
+      addAlert({ message: res_chapter.data.message, type: "success" });
+    } else {
+      addAlert({
+        type: "error",
+        message: "Error generating chapter. Try later",
+      });
+      return false;
+    }
+    return true;
+  };
+
+  const getAllChaptersInfo = async (id) => {
+    let course = await getCourseById(id);
+    if (!course) {
+      return;
+    }
+    if (course.chapters.length === 0) {
+      addAlert({
+        message: "No chapters found",
+        type: "error",
+      });
+      return;
+    }
+
+    setFeebacksShown(false);
+
+    setLoadedCount(0);
+    setLoading(true);
+    let names = [];
+    // loop through all chapters and get info
+    course.chapters.forEach(async (chapter) => {
+      names.push({ text: chapter.chapter_title });
+    });
+
+    setChapterNames(names);
+
+    let success = true;
+    for (let i = 0; i < course.chapters.length; i++) {
+      if (!(await getChapterInfo(i, id))) {
+        setLoading(false);
+        addAlert({
+          message: "Failed to generate chapters",
+          type: "error",
+        });
+        success = false;
+        break;
+      }
+      setLoadedCount((prev) => prev + 1);
+    }
+    if (success) {
+      addAlert({
+        message: "Chapters generated successfully",
+        type: "success",
+      });
+      window.location.replace("/course/" + id);
     }
   };
 
+  useEffect(() => {
+    if (loadedCount === chatperNames.length) {
+      setLoading(false);
+    }
+  }, [loadedCount]);
+
   return (
     <div>
+      {loading && (
+        <MultiStepLoader
+          loading={loading}
+          setLoading={setLoading}
+          loadingStates={chatperNames}
+          currentState={loadedCount}
+          setCurrentState={setLoadedCount}
+        />
+      )}
       <Feedbacks
         setFeedbacksShown={setFeebacksShown}
         feebacksShown={feebacksShown}
         feedbacks={feedbacks}
+        handleGenerateCourse={handleGenerateCourse}
       />
       <div className="flex flex-wrap justify-center content-center ">
         <div className="w-full h-full p-8 ">
