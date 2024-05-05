@@ -134,16 +134,16 @@ const Upload = () => {
         feebacksShown={feebacksShown}
         feedbacks={feedbacks}
       />
-      <div className="flex flex-wrap justify-center content-center">
+      <div className="flex flex-wrap justify-center content-center ">
         <div className="w-full h-full p-8 ">
           <label
             htmlFor="dropzone-file"
-            className="block font-medium text-red-900 cursor-pointer"
+            className="block font-medium text-red-900 cursor-pointer "
             style={{
               width: "23rem",
             }}
           >
-            <div className="mt-2 flex justify-center rounded-lg border border-dashed border-purple-900/25 px-6 py-8">
+            <div className="mt-2 flex justify-center rounded-lg border-2 border-dashed border-black px-6 py-8 ">
               <div className="text-center">
                 <FaFileUpload className="mx-auto h-10 w-10 text-black mb-2 hover:border-solid hover:border-red-900" />
                 <p className="mb-2 text-sm text-black mt-4">
@@ -152,13 +152,13 @@ const Upload = () => {
                   </span>
                   &nbsp; or drag and drop
                 </p>
-                <p className="text-xs text-black">MP4 up to 16MB</p>
+                <p className="text-xs text-black">MP4 up to 200MB</p>
               </div>
               <input
                 id="dropzone-file"
                 type="file"
                 className="hidden"
-                accept="video/mp4"
+                // accept="video/mp4"
                 onChange={(e) => handleVideoUpload(e)}
               />
             </div>
@@ -170,11 +170,17 @@ const Upload = () => {
                 maxWidth: "23rem",
                 whiteSpace: "nowrap",
                 overflow: "hidden",
+                fontWeight: "bold",
               }}
             >
-              {files && files.length > 0 ? `Uploading: ${files[0].name}` : ""}
+              Uploading: {files && files.length > 0 ? `${files[0].name}` : ""}
             </h2>
-            <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+            <div
+              className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700"
+              style={{
+                marginTop: "0.5rem",
+              }}
+            >
               <div
                 className={`bg-${
                   uploadStatus ? "green" : "blue"

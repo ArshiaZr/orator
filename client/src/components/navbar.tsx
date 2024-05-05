@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { IoVideocam, IoPerson } from "react-icons/io5";
 import { MdHistory } from "react-icons/md";
 import Link from "next/link";
-
+import { CiLogout } from "react-icons/ci";
 
 export function ExportNavbar() {
   return (
@@ -18,27 +18,30 @@ export function ExportNavbar() {
 function Navbar({ className }: { className?: string }) {
   const [active, setActive] = useState<string | null>(null);
   return (
-    <div className={cn("fixed top-6 inset-x-0 w-screen mx-auto z-50", className)} >
+    <div
+      className={cn("fixed top-6 inset-x-0 w-screen mx-auto z-50", className)}
+    >
       <Menu setActive={setActive}>
-
         {/* Upload */}
-        <Link href="/upload" className="flex justify-front content-center space-x-2">
+        <Link
+          href="/upload"
+          className="flex justify-front content-center space-x-2"
+        >
           <div className="flex justify-start relative top-1.5 ">
             <IoVideocam />
           </div>
           <div className="flex justify-end content-center border border-transparent">
-            <MenuItem setActive={setActive} active={active} item="Upload">
-              <h4 className="text-xl font-bold mb-1 text-black dark:text-white">
-                <HoveredLink href="/pastuploads">Past Uploads</HoveredLink>
-              </h4>
-            </MenuItem>
+            <p>Upload</p>
           </div>
         </Link>
-        
+
         {/* Past Results */}
-        <Link href="/pastresults" className="flex justify-front content-center space-x-2">
+        <Link
+          href="/pastresults"
+          className="flex justify-front content-center space-x-2"
+        >
           <div className="flex justify-start relative top-1.5 ">
-              <MdHistory />
+            <MdHistory />
           </div>
           <div className="flex justify-end content-center border border-transparent">
             <MenuItem setActive={setActive} active={active} item="Past Results">
@@ -73,16 +76,32 @@ function Navbar({ className }: { className?: string }) {
         </Link>
 
         {/* Sign In/Log In */}
-        <Link href="/profile" className="flex justify-front content-center space-x-2">
+        <button
+          onClick={() => {}}
+          className="flex justify-front content-center space-x-2"
+        >
           <div className="flex justify-start relative top-1.5">
-              <IoPerson />
+            <IoPerson />
           </div>
           <div className="flex justify-end content-center border border-transparent">
             <p>Profile</p>
           </div>
-        </Link>
+        </button>
+        <button
+          onClick={() => {
+            localStorage.removeItem("token");
+            window.location.replace("/");
+          }}
+          className="flex justify-front content-center space-x-2"
+        >
+          <div className="flex justify-start relative top-1.5">
+            <CiLogout />
+          </div>
+          <div className="flex justify-end content-center border border-transparent">
+            <p>Logout</p>
+          </div>
+        </button>
       </Menu>
     </div>
-    
   );
 }
